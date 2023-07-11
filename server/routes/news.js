@@ -42,4 +42,16 @@ router.post('/', async (req, res) => {
     }
 });
 
+router.delete('/:id', async (req, res) => {
+    try {
+        const deletedNews = await News.findByIdAndDelete(req.params.id);
+        if (!deletedNews) {
+            return res.status(404).json({ error: 'News entry not found!' });
+        }
+        res.json({ message: 'News entry deleted sucessfully' });
+    } catch (err) {
+        res.status(500).json({ error: err.message });
+    }
+});
+
 module.exports = router;
