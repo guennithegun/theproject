@@ -58,6 +58,20 @@ const AdminNewsPage = () => {
         setAuthor('');
     };
 
+    // handle news delete
+    const handleDelete = async (e) => {
+        e.preventDefault();
+
+        try {
+            const response = await axios.delete(`http://localhost:5000/api/news/${e.currentTarget.id}`);
+            console.log(response);
+            fetchAdminNews();
+            console.log(e.currentTarget.id);
+        } catch(err) {
+            console.log(err);
+        }
+    }
+
     return (
         <div className="p-8">
             <h1 className="text-xl font-semibold leading-7 text-gray-900">Manage News Entries</h1>
@@ -87,11 +101,11 @@ const AdminNewsPage = () => {
                                             <path d="M13.243 3.2 7.359 9.081a.5.5 0 0 0-.136.256L6.51 12.9a.5.5 0 0 0 .59.59l3.566-.713a.5.5 0 0 0 .255-.136L16.8 6.757 13.243 3.2Z"/>
                                         </svg>
                                     </span>
-                                    <span>
-                                    <svg className="w-5 h-5 text-red-800 dark:text-white text-xs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
-                                        <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
-                                    </svg>
-                                    </span>
+                                    <div id={entry._id} onClick={handleDelete}>
+                                        <svg className="w-5 h-5 text-red-800 dark:text-white text-xs" aria-hidden="true" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 14 14">
+                                            <path stroke="currentColor" strokeLinecap="round" strokeLinejoin="round" strokeWidth="2" d="m1 1 6 6m0 0 6 6M7 7l6-6M7 7l-6 6"/>
+                                        </svg>
+                                    </div>
                                 </td>
                             </tr>
                         ))}
